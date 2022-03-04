@@ -2,7 +2,9 @@
 
 This provides a simple CORS proxy, which is designed to run as a Cloudflare Worker.
 
-This system is compatible with [wabac.js](https://github.com/webrecorder/wabac.js)-based tools, including [ArchiveWeb.page](https://archiveweb.page) and [ReplayWeb.page](https://replayweb.page)
+This system is compatible with [wabac.js](https://github.com/webrecorder/wabac.js)-based tools, including [ArchiveWeb.page Express](https://express.archiveweb.page) and [ReplayWeb.page](https://replayweb.page)
+
+(Originally refactored from CORS proxy used in [oldweb-today](https://github.com/oldweb-today/oldweb-today) and currently used in [ArchiveWeb.page Express](https://github.com/webrecorder/express.archiveweb.page))
 
 ## Custom Headers and Status
 
