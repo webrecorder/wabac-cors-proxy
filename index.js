@@ -9,7 +9,12 @@ const cfOpts = {
 
 const CORS_ALLOWED_ORIGINS = [
   "http://localhost:10001",
+  "http://localhost:8000",
+  "https://oldweb.today",
   "https://express.archiveweb.page",
+  "https://webrecorder.github.io",
+  "https://staging.server.reprozip.org",
+  "https://server.reprozip.org",
 ];
 
 
@@ -70,6 +75,12 @@ async function handleLiveWebProxy(proxyUrl, request) {
       proxyHeaders.set("Sec-Fetch-Site", "same-origin");
     }
   }
+  const ua = request.headers.get("x-proxy-user-agent");
+  if (ua) {
+    proxyHeaders.delete("x-proxy-user-agent");
+    proxyHeaders.set("User-Agent", ua);
+  }
+  proxyHeaders.delete("host");
 
   const cookie = request.headers.get("x-proxy-cookie");
   if (cookie) {
@@ -93,7 +104,9 @@ async function handleLiveWebProxy(proxyUrl, request) {
   if ([301, 302, 303, 307, 308].includes(resp.status)) {
     headers.set("x-redirect-status", resp.status);
     headers.set("x-redirect-statusText", resp.statusText);
-    if (resp.location) {
+    if (resp.headers.get("location")) {
+      headers.set("x-orig-location", resp.headers.get("location"));
+    } else if (resp.location) {
       headers.set("x-orig-location", resp.location);
     }
     if (resp.ts) {

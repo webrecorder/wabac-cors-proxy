@@ -1,8 +1,6 @@
 name = "wabac-cors-proxy"
-type = "javascript"
-route = ''
-zone_id = ''
-usage_model = ''
+main = "./index.js"
+usage_model = 'bundled'
 compatibility_flags = []
 workers_dev = true
 compatibility_date = "2022-03-04"
