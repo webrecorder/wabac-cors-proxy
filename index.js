@@ -74,6 +74,9 @@ async function handleLiveWebProxy(proxyUrl, request) {
       proxyHeaders.delete("Origin");
       proxyHeaders.set("Sec-Fetch-Site", "same-origin");
     }
+  } else {
+    proxyHeaders.delete("Origin");
+    proxyHeaders.delete("Referer");
   }
   const ua = request.headers.get("x-proxy-user-agent");
   if (ua) {
@@ -121,8 +124,8 @@ async function handleLiveWebProxy(proxyUrl, request) {
 
   let respBody;
 
-  if (status >= 400 && !resp.headers.get("memento-datetime")) {
-    respBody = `Sorry, this page was not found or could not be loaded: (Error ${status})`;
+  if (status > 400 && status !== 404 && !resp.headers.get("memento-datetime")) {
+    respBody = `Sorry, this page could not be loaded (Error Status: ${status})`;
   } else {
     respBody = resp.body;
   }
